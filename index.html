@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Hope 💖</title>
+
+  <style>
+    body {
+      background: #ffb6c1; /* Pink background */
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    }
+
+    /* Falling hearts */
+    .heart-fall {
+      position: fixed;
+      top: -10px;
+      font-size: 22px;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ff3f6c;
+    }
+
+    p {
+      font-size: 17px;
+      color: #333;
+    }
+
+    .countdown {
+      font-weight: bold;
+      color: #ff3f6c;
+      margin: 10px 0 20px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      position: relative;
+      height: 130px;
+    }
+
+    button {
+      padding: 12px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    #yesBtn {
+      background: #ff3f6c;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #noBtn {
+      background: #eee;
+      color: #333;
+      left: 10%;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .music-btn {
+      margin-top: 10px;
+      background: #111;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .screenshot {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ff3f6c;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Hope 😍</h1>
+
+    <p>
+      Hi love 😅  
+      I was living my quiet life…  
+      then you came in and turned it pink 🙄  
+      now I’m happily stuck loving you 😒
+    </p>
+
+    <p>
+      You’re my favorite person,  
+      my comfort, my chaos,  
+      and my sweetest distraction 💖
+    </p>
+
+    <div class="countdown" id="countdown">
+      Valentine loading… ⏳
+    </div>
+
+    <button class="music-btn" onclick="playMusic()">Play Lana Del Rey 🎶</button>
+
+    <p><strong>So… will you be my Valentine? 😍💘</strong></p>
+
+    <div class="buttons">
+      <button id="yesBtn" onclick="sayYes()">YES 😍</button>
+      <button id="noBtn" onclick="fakeNo()" onmouseover="moveNo()">NO 😒</button>
+    </div>
+
+    <p id="fakeNoMsg" class="hidden">
+      ta ityem kora 😅🙄  
+      Nice try… you already belong here 😍
+    </p>
+
+    <p id="response" class="hidden">
+      I KNEW IT 😍😅  
+      Thank you for choosing me, Hope 💖  
+      I promise love, laughter, and teasing you forever 😒💕  
+      <br><br>
+      <strong>Final note:</strong><br>
+      Loving you feels easy, warm, and right ❤️  
+      <br>
+      <span class="screenshot">
+        Screenshot this and send it to me 😍📸
+      </span>
+    </p>
+
+    <!-- YouTube Lana Del Rey -->
+    <iframe id="musicFrame" class="hidden"
+      width="0" height="0"
+      src="https://www.youtube.com/embed/Bag1gUxuU0g?autoplay=1&loop=1&playlist=Bag1gUxuU0g"
+      allow="autoplay">
+    </iframe>
+  </div>
+
+  <script>
+    /* Falling hearts */
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart-fall";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
+
+    /* NO button movement */
+    function moveNo() {
+      const btn = document.getElementById("noBtn");
+      btn.style.left = Math.random() * 260 + "px";
+      btn.style.top = Math.random() * 80 + "px";
+    }
+
+    function fakeNo() {
+      document.getElementById("fakeNoMsg").classList.remove("hidden");
+    }
+
+    function sayYes() {
+      document.getElementById("response").classList.remove("hidden");
+      document.getElementById("fakeNoMsg").classList.add("hidden");
+    }
+
+    function playMusic() {
+      document.getElementById("musicFrame").classList.remove("hidden");
+    }
+
+    /* Valentine countdown */
+    function updateCountdown() {
+      const now = new Date();
+      let year = now.getFullYear();
+      let valentines = new Date(year, 1, 14); // Feb 14
+
+      if (now > valentines) {
+        valentines = new Date(year + 1, 1, 14);
+      }
+
+      const diff = valentines - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+      document.getElementById("countdown").innerHTML =
+        `Valentine’s Day in ${days} days, ${hours} hours, ${minutes} minutes 😍⏳`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+  </script>
+
+</body>
+  </html>
